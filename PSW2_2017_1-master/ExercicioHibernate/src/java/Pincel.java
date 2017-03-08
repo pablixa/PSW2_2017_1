@@ -1,15 +1,37 @@
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 
 @Entity
 public class Pincel {
-    private String cor;
-    private String fabricante;
+    
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int identificador;
+    
+    
+    private String cor;
+    
+    @ManyToOne
+    private Fabricante fabricante;
+  
     private int num_serie;
 
+    public int getIdentificador() {
+        return identificador;
+    }
+
+    public void setIdentificador(int identificador) {
+        this.identificador = identificador;
+    }
+
+    
+    
+    
     public String getCor() {
         return cor;
     }
@@ -18,11 +40,11 @@ public class Pincel {
         this.cor = cor;
     }
 
-    public String getFabricante() {
+    public Fabricante getFabricante() {
         return fabricante;
     }
 
-    public void setFabricante(String fabricante) {
+    public void setFabricante(Fabricante fabricante) {
         this.fabricante = fabricante;
     }
 

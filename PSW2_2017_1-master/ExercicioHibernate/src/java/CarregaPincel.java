@@ -38,13 +38,20 @@ public class CarregaPincel extends HttpServlet {
             
            
             pincel0 = (Pincel) sessao.get(Pincel.class, idPincel);
+    
             ///Buscar do banco ()
             
-            out.println("Dados do pincel 0: ");
+            if (pincel0 != null){
+            
+            out.println("Dados do pincel : " + idPincel + " ");
             out.println("cor: " + pincel0.getCor());
             out.println("fabricante: " + pincel0.getFabricante());
             out.println("num_serie: " + pincel0.getNum_serie());
-            
+        
+            }
+            else{
+                System.out.println("Não encontrei o pincel  de id: " + idPincel);
+            }
         }
     }
 

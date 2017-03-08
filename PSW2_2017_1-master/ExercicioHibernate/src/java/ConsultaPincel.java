@@ -1,17 +1,25 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
- * @author ra21553740
+ * @author RA21553740
  */
-public class SalvarPincel extends HttpServlet {
+public class ConsultaPincel extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -26,56 +34,35 @@ public class SalvarPincel extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ConsultaPincel</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ConsultaPincel at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
             
             
-            try{
-                
-               Integer idFab = Integer.parseInt(request.getParameter("fab")); //pega lá do formulário
-                
-                
-                Fabricante f = new Fabricante();
-                f.setId(idFab);
-                
-                
-                
-                Pincel p1 = new Pincel();
-
-                p1.setCor(request.getParameter("cor"));
-                p1.setFabricante(f);
-                
-                //p1.setFabricante(request.getParameter("fab"));
-                String num = request.getParameter("num");
-                if(num != null){
-                    Integer numi = Integer.parseInt(num);
-                    p1.setNum_serie(numi);
-                }
-
-                Session sessao = HibernateUtil.
-                                    getSessionFactory()
-                                    .openSession();
-
-                Transaction tx = sessao.beginTransaction();
-                
-                try{
-                //sessao.save(f);
-                sessao.save(p1);
-                sessao.flush();
-
-                tx.commit();
-            }
-            catch (Exception e){
-                System.out.println("Erro:" + e.getMessage());
-                e.printStackTrace();
-                tx.rollback();
+            Session s = HibernateUtil.getSessionFactory().openSession();
             
+            Criteria criteria = s.createCriteria(Pincel.class);
+            criteria.add(Restrictions.eq("cor", "vermelhor"));
+            
+            List<Pincel> result = criteria.list();
+            
+            
+            System.out.println("Pinceis encontrados: <br>" );
+            
+            for(Pincel p : result){
+           out.println("<br>Pincel numero: " + p.getNum_serie());
+           out.println("<br>cor: " + p.getCor());
+           out.println("<br>");
             }
-                sessao.close();
-                
-                out.println("Registro inserido com sucesso!");
-            } catch (Exception ex) {
-                out.println("Erro ao inserir pincel: " + ex.getMessage());
-                
-            }
+            s.close();
+            
         }
     }
 
@@ -119,3 +106,4 @@ public class SalvarPincel extends HttpServlet {
     }// </editor-fold>
 
 }
+

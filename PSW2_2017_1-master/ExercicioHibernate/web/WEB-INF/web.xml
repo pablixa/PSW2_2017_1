@@ -8,6 +8,10 @@
         <servlet-name>CarregaPincel</servlet-name>
         <servlet-class>CarregaPincel</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ConsultaPincel</servlet-name>
+        <servlet-class>ConsultaPincel</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SalvarPincel</servlet-name>
         <url-pattern>/SalvarPincel</url-pattern>
@@ -15,6 +19,10 @@
     <servlet-mapping>
         <servlet-name>CarregaPincel</servlet-name>
         <url-pattern>/CarregaPincel</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ConsultaPincel</servlet-name>
+        <url-pattern>/ConsultaPincel</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
