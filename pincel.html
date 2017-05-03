@@ -1,0 +1,93 @@
+<html>
+    <head>
+        <title>GAY'S</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+        
+    </head>
+
+    <body ng-app="minhaapp" ng-controller="meuctrl" >
+        <center>
+        
+        Nome:<input type="text" ng-model="piada.nome"></br></br>
+        Texto: <input type="text"  ng-model="piada.texto"> </br></br>
+        Nota: <input type="number" ng-model="piada.nota"> </br></br>
+        Adulta <input type="checkbox" ng-model="piada.adulta"></br></br>
+        Autor: <input type="text" ng-model="piada.autor.nome"></br></br>                                               
+                                                       
+              {{piada}} </br></br>      
+                                                        
+<button ng-click="salvar()"> SALVAR </button>  </br></br>
+              <button ng-click="listar()"> LISTAR </button>  
+              <div ng-repeat="piada in piadas">
+                  <ol>
+                      <li>{{piada.nome}}</li>
+                      <li>{{piada.nota}}</li>
+                      <li>{{piada.autor.nome}}</li>
+                      
+                  </ol>
+                  
+              </div>
+             <p>Resultado: </p>                 
+             <p>{{status}}</p>
+             <p>{{erro}}</p>
+             <p>{{resp}}</p> </br>
+                      
+                      
+                       
+                       
+        
+        </center>
+    </body>
+        
+    <script>
+    var app = angular.module('minhaapp', []);
+    
+   
+    
+   
+        
+    var funcbata = function($scope) {
+        
+        $scope.piada ;
+        
+            
+             $scope.status="parado"; 
+        
+             $scope.listar = function(){
+             
+             $http.get("http://piada.herokuapp.com/piada").then(function(resp){
+                $scope.status = "concluido";
+                 
+                 
+             }, function(error){
+             
+                $scope.status = "concluido";
+                $scopo.erro = error; 
+             });
+             
+             } 
+        
+             $scope.salvar = function(piada){ 
+             $scope.status="carregando";      
+                
+                $http.post("http://piada.herokuapp.com/piada", piada).then(function(response){
+                    $scope.resp = response; 
+                     $scope.status="concluido"; 
+                    }, function(error){
+                     $scope.status="concluido"; 
+                     $scope.erro = error;
+                
+            })            
+            console.log("oi");
+            
+            }
+        
+         
+        
+        };
+        
+    app.controller('meuctrl', funcbata);
+    
+    </script>
+        
+</html>
